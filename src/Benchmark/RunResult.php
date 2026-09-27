@@ -43,7 +43,7 @@ final readonly class RunResult implements \JsonSerializable
                 }
                 $ids = array_map(strval(...), array_keys($criteria));
                 $entries = [];
-                foreach ($outcome->ranking($id, $ids)->getContent() as $entry) {
+                foreach ($outcome->ranking((string) $id, $ids)->getContent() as $entry) {
                     $entries[] = ['candidate_id' => $ids[$entry->getIndex()], 'score' => $entry->getScore()];
                 }
                 $rankings[$id] = $entries;

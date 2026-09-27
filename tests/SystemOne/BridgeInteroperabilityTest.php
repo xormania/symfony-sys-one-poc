@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\SystemOne;
 
+use App\Benchmark\Fixture;
+use App\Benchmark\Runner;
 use App\SystemOne\Evaluator;
 use App\Tests\Support\WireSamples;
 use Symfony\AI\Platform\Bridge\TypeSafe\Evaluation;
@@ -59,8 +61,11 @@ final class BridgeInteroperabilityTest extends KernelTestCase
 
             return new MockResponse('{"model":"clm-latest","answers":{"0":{"type":"choice","choice":"1","probabilities":{"0":0.1,"1":0.9},"confidence":0.8}}}');
         });
-        $outcome = WireSamples::evaluator($client)->evaluate('clm', new Evaluation('State', ['0' => new ChoiceQuestion('Which?', ['0' => 'No', '1' => 'Yes'])]));
+        $fixture = new Fixture('numeric-identifiers', 'Synthetic identity test', new Evaluation('State', ['0' => new ChoiceQuestion('Which?', ['0' => 'No', '1' => 'Yes'])]), ['0' => '1']);
+        $runs = (new Runner(WireSamples::evaluator($client)))->run(['clm'], [$fixture], 1);
+        $outcome = $runs[0]->outcome;
         self::assertSame('1', $outcome->answers->getChoice('0')->getChoice());
         self::assertNull($outcome->usage);
+        self::assertSame('1', $runs[0]->jsonSerialize()['rankings']->{'0'}[0]['candidate_id']);
     }
 }

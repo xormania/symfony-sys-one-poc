@@ -59,6 +59,7 @@ final readonly class Runner
     {
         $failures = [];
         foreach ($fixture->expected as $id => $expected) {
+            $id = (string) $id;
             $answer = $outcome->answers->get($id);
             $actual = match (true) {
                 $answer instanceof NoulAnswer => $answer->getProbability(),

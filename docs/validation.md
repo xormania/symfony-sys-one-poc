@@ -10,7 +10,7 @@ Recorded 2026-09-27. This record distinguishes PHP integration evidence from mod
 | --- | --- |
 | Composer manifest and lock validation | Passed in strict mode |
 | Symfony compiled container | Passed `lint:container --env=test` |
-| PHPUnit 13.3.5 | 31 tests, 93 assertions passed on each PHP version |
+| PHPUnit 13.3.5 | 31 tests, 94 assertions passed on each PHP version |
 | PHPStan 2.2.16 | Maximum level; no errors or baseline |
 | PHP CS Fixer 3.95.27 | Symfony rules and strict types; no changes required |
 | Offline fixture listing | Eight fixtures listed without contacting a provider |
